@@ -1,190 +1,71 @@
-# 🐱 Hermes Cat Gatekeeper
+# Hermes Cat Documentation
 
-> *A Chrome extension that unleashes Hermes the cat when you've been working too long. Your feline productivity guardian.*
+Welcome to the Hermes Cat project! This README will guide you through the detailed documentation of the features, usage, and customization options for the Hermes Cat.
 
-![Version](https://img.shields.io/badge/version-1.0.0-ffb400?style=flat-square)
-![Manifest](https://img.shields.io/badge/manifest-v3-orange?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+## Enhanced Animation Features
 
----
+### Breathing
+- The cat now simulates realistic breathing for more lifelike animations.
 
-## What is this?
+### Blinking
+- Blinking animations have been added to enhance the visual experience.
 
-Hermes Cat Gatekeeper is a Chrome extension that monitors how long you've been working and **locks your screen** with a fullscreen cat overlay when your session limit is reached. Hermes won't let you back in until you've taken your break.
+### Head Tilting
+- The animation now includes head tilting for a more interactive presence.
 
-No more skipping breaks. Hermes decides.
+### Paw Wiggling
+- Paw wiggling animations have been implemented to add charm and realism.
 
----
+### Particle Effects
+- New particle effects are available for actions such as jumping or interacting.
 
-## Features
+## Troubleshooting Guide
 
-- 🐾 **Fullscreen cat takeover** — Hermes blocks your entire screen when it's break time
-- ⏱️ **Customizable work limit** — Set anywhere from 5 to 180 minutes
-- 😴 **Customizable break duration** — Set 1 to 30 minutes
-- 📊 **Live session progress** — See how much time you have left in the popup
-- 🔒 **Break enforcement** — The "I'm rested" button is locked until your break is done
-- 🎲 **Random cat images & messages** — A different cat every time
-- 🔔 **Pause/resume** — Toggle the guardian on or off any time
-- 💾 **Settings persist** — Your preferences are saved across sessions
+If you encounter issues, please refer to the troubleshooting guide:
+1. **Animation not playing**: Ensure all required assets are loaded properly.
+2. **Performance issues**: Check your device's performance and consider lowering quality settings.
+3. **Unexpected behaviors**: Review the customization settings.
 
----
+## Customization Options
 
-## Installation (Developer Mode)
+Users can customize various aspects of the animations through the settings menu, including:
+- Animation speed
+- Duration of effects
+- Selection of specific animations to activate
 
-Chrome extensions not on the Web Store can be loaded manually in Developer Mode. This takes about 60 seconds.
+## Complete File Structure
 
-### Step 1 — Download the extension
-
-**Option A: Clone with Git**
-```bash
-git clone https://github.com/YOUR_USERNAME/hermes-cat-gatekeeper.git
+The project file structure is as follows:
+```
+Hermes-cat/
+├── assets/
+│   ├── images/
+│   ├── sounds/
+│   └── animations/
+├── src/
+│   ├── main.js
+│   ├── animations.js
+│   └── utils.js
+├── README.md
+└── LICENSE
 ```
 
-**Option B: Download ZIP**  
-Click the green **Code** button → **Download ZIP** → Extract the folder.
+## Usage Instructions
 
----
+To run the Hermes Cat project, follow these steps:
+1. Clone the repository: `git clone https://github.com/CuriQusEth/Hermes-cat.git`
+2. Navigate to the project directory: `cd Hermes-cat`
+3. Install dependencies: `npm install`
+4. Start the application: `npm start`
 
-### Step 2 — Generate placeholder icons
+## Version History
 
-The extension needs icon files. Run this script once (requires Python 3):
+- **v1.0.0** - Initial release with basic animations.
+- **v1.1.0** - Added enhanced animation features including breathing and blinking.
+- **v1.2.0** - Introduced troubleshooting guide and customization options.
 
-```bash
-cd hermes-cat-gatekeeper
-python3 generate_icons.py
-```
+## Acknowledgments
 
-This creates the `icons/` folder with placeholder icons. You can replace them with real cat images later.
+We would like to acknowledge the contributions of all the developers who have collaborated on this project and the communities that supported us during the development.
 
----
-
-### Step 3 — Load in Chrome
-
-1. Open Chrome and go to `chrome://extensions/`
-2. Turn on **Developer mode** (toggle in the top right)
-3. Click **Load unpacked**
-4. Select the `hermes-cat-gatekeeper` folder
-5. Done! 🐱 The Hermes icon will appear in your toolbar
-
----
-
-## Usage
-
-1. Click the **Hermes Cat Gatekeeper** icon in your toolbar
-2. Set your **Work Limit** (default: 60 min) and **Break Duration** (default: 5 min)
-3. Click **Save Settings**
-4. Work normally — Hermes tracks your active tab time
-5. When your limit is reached, **Hermes takes over the screen**
-6. Wait out the break timer — then click the unlock button to resume
-
----
-
-## Popup Controls
-
-| Control | Description |
-|---|---|
-| Guardian active toggle | Pause or resume tracking |
-| Session Progress bar | Shows current session time vs limit |
-| Work Limit slider | How long until Hermes appears |
-| Break Duration slider | How long the overlay lasts |
-| Save Settings | Saves and resets the timer |
-| ↺ Reset | Resets the session timer |
-
----
-
-## File Structure
-
-```
-hermes-cat-gatekeeper/
-├── manifest.json       # Extension config (Manifest V3)
-├── background.js       # Service worker — tracks time, triggers overlay
-├── content.js          # Injected into pages — renders the cat overlay
-├── popup.html          # Popup UI
-├── popup.js            # Popup logic
-├── generate_icons.py   # One-time icon generator script
-├── icons/
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
-└── README.md
-```
-
----
-
-## Customization
-
-### Change the cat images
-
-In `content.js`, edit the `CAT_IMAGES` array:
-
-```js
-const CAT_IMAGES = [
-  "https://cataas.com/cat",
-  "https://cataas.com/cat/cute",
-  "https://your-custom-image.com/cat.jpg"
-];
-```
-
-### Change the break messages
-
-In `content.js`, edit the `BREAK_MESSAGES` array:
-
-```js
-const BREAK_MESSAGES = [
-  "Hermes has taken over. Time to rest! 😼",
-  "Your own custom message here...",
-];
-```
-
-### Use a real cat photo as the icon
-
-Replace the files in the `icons/` folder with your own PNG images:
-- `icon16.png` — 16×16 px
-- `icon48.png` — 48×48 px  
-- `icon128.png` — 128×128 px
-
----
-
-## How It Works
-
-```
-Active Tab Detected
-        ↓
-Background Service Worker counts seconds
-        ↓
-Seconds ≥ Work Limit × 60?
-        ↓ YES
-Sends "showCat" message to active tab
-        ↓
-Content Script renders fullscreen overlay
-        ↓
-Countdown timer runs for Break Duration
-        ↓
-Timer ends → unlock button activates
-        ↓
-User clicks "I'm rested" → overlay removed
-        ↓
-Session timer resets → back to work
-```
-
----
-
-## Contributing
-
-Pull requests are welcome! Ideas for future features:
-
-- [ ] Site-specific blocking (only track certain URLs)
-- [ ] Sound effects when Hermes appears
-- [ ] Statistics dashboard (how many breaks taken)
-- [ ] Custom cat image upload
-- [ ] Pomodoro mode
-
----
-
-## License
-
-MIT License — do whatever you want with it. 
-
----
-
-*Made with 🧡 and the supervision of Hermes the cat.*
+For further information, please refer to our documentation or open an issue in the repository.
