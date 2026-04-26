@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Cat Gatekeeper</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 320px;
+      background: #0d0d12;
+      color: #f0ebe4;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1025 0%, #0d1a2e 100%);
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,180,0,0.15);
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 20px; right: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,180,0,0.4), transparent);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .cat-emoji {
+      font-size: 28px;
+      filter: drop-shadow(0 0 8px rgba(255,180,0,0.6));
+    }
+
+    .header-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: #f0ebe4;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .toggle-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .toggle {
+      position: relative;
+      width: 38px;
+      height: 20px;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      height: 14px; width: 14px;
+      left: 3px; top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: linear-gradient(90deg, #ffb400, #ff6a00);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(18px);
+    }
+
+    /* Progress section */
+    .progress-section {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .progress-time {
+      font-size: 0.8rem;
+      color: #ffb400;
+      font-weight: 600;
+    }
+
+    .progress-bar-bg {
+      height: 5px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ffb400, #ff6a00);
+      border-radius: 3px;
+      transition: width 1s linear;
+      width: 0%;
+    }
+
+    /* Settings section */
+    .settings-section {
+      padding: 16px 20px;
+    }
+
+    .setting-group {
+      margin-bottom: 14px;
+    }
+
+    .setting-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      height: 4px;
+      -webkit-appearance: none;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(135deg, #ffb400, #ff6a00);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+    }
+
+    .range-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffb400;
+      min-width: 50px;
+      text-align: right;
+    }
+
+    /* Buttons */
+    .btn-row {
+      padding: 0 20px 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-save {
+      flex: 1;
+      padding: 11px;
+      background: linear-gradient(135deg, #ffb400, #ff6a00);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    }
+
+    .btn-reset {
+      padding: 11px 14px;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-reset:hover {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 10px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #ffb400, #ff6a00);
+      color: #0a0a0f;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 8px 18px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show { opacity: 1; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 0 20px;
+    }
+
+    .footer {
+      padding: 10px 20px 14px;
+      text-align: center;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-top">
+      <span class="cat-emoji">🐱</span>
+      <div class="header-text">
+        <h1>Hermes Cat Gatekeeper</h1>
+        <p>Your feline productivity guardian</p>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Guardian active</span>
+      <label class="toggle">
+        <input type="checkbox" id="enabledToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">Session Progress</span>
+      <span class="progress-time" id="progressTime">0:00 / --:--</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="setting-group">
+      <span class="setting-label">Work Limit</span>
+      <div class="slider-row">
+        <input type="range" id="limitSlider" min="5" max="180" step="5" value="60">
+        <span class="range-value" id="limitVal">60 min</span>
+      </div>
+    </div>
+    <div class="setting-group">
+      <span class="setting-label">Break Duration</span>
+      <div class="slider-row">
+        <input type="range" id="breakSlider" min="1" max="30" step="1" value="5">
+        <span class="range-value" id="breakVal">5 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="btn-row">
+    <button class="btn-save" id="saveBtn">💾 Save Settings</button>
+    <button class="btn-reset" id="resetBtn">↺ Reset</button>
+  </div>
+
+  <div class="footer">Hermes is always watching 🐾</div>
+  <div class="toast" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
